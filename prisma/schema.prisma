@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Character {
+  id          String   @id @default(uuid())
+  category    String
+  realname    String
+  fictionname String
+  avatar      String
+  age         Int
+  height      Float
+  weight      Float
+  planet      String
+  skills      Skills[]
+
+  @@map("characters")
+}
+
+model Skills {
+  id           String @id @default(uuid())
+  force        Int
+  intelligence Int
+  agility      Int
+  resistance   Int
+  velocity     Int
+
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId String    @unique @default(uuid())
+
+  @@map("skills")
+}
