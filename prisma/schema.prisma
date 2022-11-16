@@ -10,17 +10,30 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+model Category {
+  id       String @id @default(uuid())
+  category String
+
+  characters Character[]
+
+  @@map("category")
+}
+
 model Character {
-  id          String   @id @default(uuid())
-  category    String
-  realname    String
+  id          String @id @default(uuid())
+  realname    String @unique
   fictionname String
   avatar      String
   age         Int
   height      Float
   weight      Float
   planet      String
-  skills      Skills[]
+  biography   String
+  characterId String
+
+  category Category @relation(fields: [characterId], references: [id])
+
+  skills Skills[]
 
   @@map("characters")
 }
@@ -34,7 +47,7 @@ model Skills {
   velocity     Int
 
   character   Character @relation(fields: [characterId], references: [id])
-  characterId String    @unique @default(uuid())
+  characterId String    @unique
 
   @@map("skills")
 }
