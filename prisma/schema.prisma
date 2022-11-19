@@ -21,21 +21,31 @@ model Category {
 
 model Character {
   id          String @id @default(uuid())
-  realname    String @unique
+  alterEgo    String
   fictionname String
   avatar      String
-  age         Int
-  height      Float
-  weight      Float
-  planet      String
   biography   String
+
   characterId String
 
   category Category @relation(fields: [characterId], references: [id])
 
-  skills Skills[]
+  skills         Skills[]
+  caracteristics Caracteristics[]
 
   @@map("characters")
+}
+
+model Caracteristics {
+  id String @id @default(uuid())
+
+  age      Int
+  height   Float
+  weight   Float
+  universe String
+
+  character                 Character @relation(fields: [characterCaracteristicsId], references: [id])
+  characterCaracteristicsId String    @unique
 }
 
 model Skills {
@@ -46,8 +56,8 @@ model Skills {
   resistance   Int
   velocity     Int
 
-  character   Character @relation(fields: [characterId], references: [id])
-  characterId String    @unique
+  character         Character @relation(fields: [characterSkillsId], references: [id])
+  characterSkillsId String    @unique
 
   @@map("skills")
 }
