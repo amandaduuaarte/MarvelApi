@@ -14,17 +14,52 @@ app.get("/characters", async (req: any, res: any) => {
   res.send({ characters });
 });
 
-app.get("/characters/category", async (req: any, res: any) => {
+app.get("/characters/categories", async (req: any, res: any) => {
   //Listagem por categoria
-  const category = await prisma.character.findMany({
+
+  const hero = await prisma.character.findMany({
     where: {
       category: {
-        category: "Heróis",
+        category: "hero",
       },
     },
   });
 
-  res.send({ category });
+  const antiHero = await prisma.character.findMany({
+    where: {
+      category: {
+        category: "antihero",
+      },
+    },
+  });
+
+  const villain = await prisma.character.findMany({
+    where: {
+      category: {
+        category: "villain",
+      },
+    },
+  });
+
+  const aliens = await prisma.character.findMany({
+    where: {
+      category: {
+        category: "aliens",
+      },
+    },
+  });
+
+  const human = await prisma.character.findMany({
+    where: {
+      category: {
+        category: "human",
+      },
+    },
+  });
+
+  const categories = [{ hero, antiHero, villain, aliens, human }];
+
+  res.send({ categories });
 });
 
 app.get("/characters/category/:id?/movies", (req: any, res: any) => {
