@@ -1,9 +1,12 @@
-import { PrismaClient } from "@prisma/client";
 const express = require("express");
 
 const app = express();
 const port = 3030;
 const cors = require("cors");
+
+const categoryRouter = require("./routes/category");
+const characterRouter = require("./routes/character");
+const skillsRouter = require("./routes/skills");
 
 const corsOptions = {
   origin: "https://localhost",
@@ -11,44 +14,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-const prisma = new PrismaClient({
-  log: ["query"],
-});
-
-app.get("/v1/characters", async (req: any, res: any) => {
-  const characters = await prisma.character.findMany();
-
-  res.send({ characters });
-});
-
-/**
- * Categorias:
- */
-app.get("/v1/characters/categories/:category", async (req: any, res: any) => {
-  const { category } = req.params;
-
-  const characters = await prisma.character.findMany({
-    where: {
-      category: {
-        category: category,
-      },
-    },
-  });
-
-  res.json(characters);
-});
-
-app.get("/v1/characters/skills/:id", async (req: any, res: any) => {
-  const { id } = req.params;
-
-  const skills = await prisma.skills.findMany({
-    where: {
-      characterSkillsId: id,
-    },
-  });
-
-  res.send({ skills });
-});
+app.use("/v1", characterRouter);
+app.use("/v1/characters/categories", categoryRouter);
+app.use("/v1/characters/skills", skillsRouter);
 
 app.listen(port, () => {
   console.log("Servidor rodando");
