@@ -1,7 +1,7 @@
-import express from "express";
+import { Router } from "express";
 const skills = require("../controllers/skills");
 
-const routerSkills = express.Router();
+const routerSkills = Router();
 
 routerSkills.get("/:id", skills.getSkills);
 

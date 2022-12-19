@@ -1,7 +1,7 @@
-import express from "express";
+import { Router } from "express";
 const character = require("../controllers/character");
 
-const routerCharacter = express.Router();
+const routerCharacter = Router();
 
 routerCharacter.get("/characters", character.getCharacter);
 

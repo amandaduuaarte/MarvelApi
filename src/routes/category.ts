@@ -1,7 +1,7 @@
-import express from "express";
+import { Router } from "express";
 const category = require("../controllers/category");
 
-const routerCategory = express.Router();
+const routerCategory = Router();
 
 routerCategory.get("/:category", category.getCategory);
 
