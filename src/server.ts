@@ -3,6 +3,13 @@ const express = require("express");
 
 const app = express();
 const port = 3030;
+const cors = require("cors");
+
+const corsOptions = {
+  origin: "https://localhost",
+};
+
+app.use(cors(corsOptions));
 
 const prisma = new PrismaClient({
   log: ["query"],
@@ -14,63 +21,29 @@ app.get("/v1/characters", async (req: any, res: any) => {
   res.send({ characters });
 });
 
-app.get("/v1/characters/categories", async (req: any, res: any) => {
-  //Listagem por categoria
+/**
+ * Categorias:
+ */
+app.get("/v1/characters/categories/:category", async (req: any, res: any) => {
+  const { category } = req.params;
 
-  const hero = await prisma.character.findMany({
+  const characters = await prisma.character.findMany({
     where: {
       category: {
-        category: "hero",
+        category: category,
       },
     },
   });
 
-  const antiHero = await prisma.character.findMany({
-    where: {
-      category: {
-        category: "antihero",
-      },
-    },
-  });
-
-  const villain = await prisma.character.findMany({
-    where: {
-      category: {
-        category: "villain",
-      },
-    },
-  });
-
-  const alien = await prisma.character.findMany({
-    where: {
-      category: {
-        category: "alien",
-      },
-    },
-  });
-
-  const human = await prisma.character.findMany({
-    where: {
-      category: {
-        category: "human",
-      },
-    },
-  });
-
-  const categories = [{ hero, antiHero, villain, alien, human }];
-
-  res.send({ categories });
+  res.json(characters);
 });
 
 app.get("/v1/characters/skills/:id", async (req: any, res: any) => {
   const { id } = req.params;
 
-  const skills = await prisma.character.findMany({
+  const skills = await prisma.skills.findMany({
     where: {
-      id: id,
-    },
-    select: {
-      skills: true,
+      characterSkillsId: id,
     },
   });
 
