@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
+import { Request, Response } from "express";
 
 const prisma = new PrismaClient({
   log: ["query"],
 });
 
-const getCategory = async function (req: any, res: any) {
+const getCategory = async function (req: Request, res: Response) {
   const { category } = req.params;
 
   const characters = await prisma.character.findMany({
@@ -15,7 +16,19 @@ const getCategory = async function (req: any, res: any) {
     },
   });
 
-  res.json(characters);
+  if (!characters || characters.length === 0) {
+    return res.status(404).json({
+      status: "error",
+      message: "Invalid id",
+    });
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      characters,
+    },
+  });
 };
 
 module.exports = { getCategory };

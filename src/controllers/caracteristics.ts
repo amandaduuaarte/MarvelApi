@@ -5,10 +5,16 @@ const prisma = new PrismaClient({
   log: ["query"],
 });
 
-const getCharacter = async function (req: Request, res: Response) {
-  const characters = await prisma.character.findMany();
+const getCaracteristics = async function (req: Request, res: Response) {
+  const { id } = req.params;
 
-  if (!characters || characters.length === 0) {
+  const caracteristics = await prisma.caracteristics.findMany({
+    where: {
+      characterCaracteristicsId: id,
+    },
+  });
+
+  if (!caracteristics) {
     return res.status(404).json({
       status: "error",
       message: "Invalid id",
@@ -18,9 +24,9 @@ const getCharacter = async function (req: Request, res: Response) {
   res.status(200).json({
     status: "success",
     data: {
-      characters,
+      caracteristics,
     },
   });
 };
 
-module.exports = { getCharacter };
+module.exports = { getCaracteristics };

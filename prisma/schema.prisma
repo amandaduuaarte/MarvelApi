@@ -37,8 +37,7 @@ model Character {
 }
 
 model Caracteristics {
-  id String @id @default(uuid())
-
+  id       String @id @default(uuid())
   age      Int
   height   Float
   weight   Float
@@ -46,6 +45,8 @@ model Caracteristics {
 
   character                 Character @relation(fields: [characterCaracteristicsId], references: [id])
   characterCaracteristicsId String    @unique
+
+  @@map("caracteristics")
 }
 
 model Skills {
