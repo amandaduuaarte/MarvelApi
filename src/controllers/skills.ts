@@ -14,7 +14,17 @@ const getSkills = async function (req: Request, res: Response) {
     },
   });
 
-  res.send({ skills });
+  if (!skills) {
+    return res.status(404).json({
+      status: "error",
+      message: "Invalid id",
+    });
+  }
+
+  res.status(200).json({
+    status: "success",
+    skills,
+  });
 };
 
 module.exports = { getSkills };

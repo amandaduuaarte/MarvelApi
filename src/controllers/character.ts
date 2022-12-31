@@ -17,9 +17,7 @@ const getCharacter = async function (req: Request, res: Response) {
 
   res.status(200).json({
     status: "success",
-    data: {
-      characters,
-    },
+    characters,
   });
 };
 

@@ -23,9 +23,7 @@ const getCaracteristics = async function (req: Request, res: Response) {
 
   res.status(200).json({
     status: "success",
-    data: {
-      caracteristics,
-    },
+    caracteristics,
   });
 };
 

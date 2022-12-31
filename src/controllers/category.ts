@@ -17,17 +17,15 @@ const getCategory = async function (req: Request, res: Response) {
   });
 
   if (!characters || characters.length === 0) {
-    return res.status(404).json({
+    return res.status(404).send({
       status: "error",
       message: "Invalid id",
     });
   }
 
-  res.status(200).json({
+  res.status(200).send({
     status: "success",
-    data: {
-      characters,
-    },
+    characters,
   });
 };
 
