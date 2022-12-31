@@ -31,20 +31,20 @@ model Character {
   category Category @relation(fields: [characterId], references: [id])
 
   skills         Skills[]
-  caracteristics Caracteristics[]
+  Caracteristics Caracteristics[]
 
   @@map("characters")
 }
 
 model Caracteristics {
   id       String @id @default(uuid())
-  age      Int
+  birth    Int
   height   Float
   weight   Float
   universe String
 
-  character                 Character @relation(fields: [characterCaracteristicsId], references: [id])
-  characterCaracteristicsId String    @unique
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId String
 
   @@map("caracteristics")
 }

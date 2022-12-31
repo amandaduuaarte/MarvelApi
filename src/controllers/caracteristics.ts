@@ -10,7 +10,7 @@ const getCaracteristics = async function (req: Request, res: Response) {
 
   const caracteristics = await prisma.caracteristics.findMany({
     where: {
-      characterCaracteristicsId: id,
+      characterId: id,
     },
   });
 

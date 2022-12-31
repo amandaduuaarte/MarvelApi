@@ -18,7 +18,7 @@ app.use(cors());
 app.use("/v1", characterRouter);
 app.use("/v1/characters/categories", categoryRouter);
 app.use("/v1/characters/skills", skillsRouter);
-app.use("/v1/characters/caracters", caracteristicsRouter);
+app.use("/v1/characters/caracteristics", caracteristicsRouter);
 
 app.listen(port, () => {
   console.log("Servidor rodando", port);
